@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import MarkdownIt from 'markdown-it';
+import MarkdownEditor from 'react-markdown-editor-lite';
+import 'react-markdown-editor-lite/lib/index.css';
+import demoValue from './demoValue';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [editorVal, setEditorVal] = useState('');
+
+	const MarkdownParser = new MarkdownIt({
+		html: true,
+		linkify: true,
+		typographer: true,
+		quotes: '“”‘’',
+	});
+
+	const configEditor = {
+		canView: {
+			menu: true,
+			md: true,
+			html: true,
+			fullScreen: true,
+			hideMenu: true,
+		},
+	};
+
+	const onEditorChange = (value) => {
+		const { html, text } = value;
+		setEditorVal(text);
+		console.log('onEditorChange', html, text);
+	};
+
+	const onDemo = () => {
+		setEditorVal(demoValue);
+	};
+
+	return (
+		<div>
+			<h2>Editor 1</h2>
+			<button onClick={onDemo}>Show Demo</button>
+			<MarkdownEditor
+				style={{ height: '500px' }}
+				config={configEditor}
+				renderHTML={(text) => MarkdownParser.render(text)}
+				onChange={onEditorChange}
+				value={editorVal}
+			/>
+		</div>
+	);
 }
 
 export default App;
