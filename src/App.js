@@ -35,16 +35,22 @@ function App() {
 	};
 
 	return (
-		<div>
-			<h2>Editor 1</h2>
-			<button onClick={onDemo}>Show Demo</button>
-			<MarkdownEditor
-				style={{ height: '500px' }}
-				config={configEditor}
-				renderHTML={(text) => MarkdownParser.render(text)}
-				onChange={onEditorChange}
-				value={editorVal}
-			/>
+		<div className="container pt-5">
+			<h2>Sample Markdown Editor</h2>
+			<div className="row">
+				<div className="col-12">
+					<button className="btn btn-primary my-3" onClick={onDemo}>
+						Show Demo
+					</button>
+					<MarkdownEditor
+						style={{ height: '500px' }}
+						config={configEditor}
+						renderHTML={(text) => MarkdownParser.render(text)}
+						onChange={onEditorChange}
+						value={editorVal}
+					/>
+				</div>
+			</div>
 		</div>
 	);
 }
